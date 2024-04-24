@@ -2,8 +2,10 @@ package com.prueba.demo.mapper;
 
 import com.prueba.demo.dto.DtoDetalleVenta;
 import com.prueba.demo.dto.DtoInsumoPrendas;
+import com.prueba.demo.dto.DtoInsumoProveedor;
 import com.prueba.demo.models.DetalleVenta;
 import com.prueba.demo.models.InsumoPrendas;
+import com.prueba.demo.models.InsumoProveedor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,19 +15,19 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class MapperInsumoPrendas {
+public class MapperInsumoProveedor {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MapperInsumoPrendas(ModelMapper modelMapper) {
+    public MapperInsumoProveedor(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-    public DtoInsumoPrendas toDto(InsumoPrendas c) {
-        return modelMapper.map(c, DtoInsumoPrendas.class);
+    public DtoInsumoProveedor toDto(InsumoProveedor c) {
+        return modelMapper.map(c, DtoInsumoProveedor.class);
     }
 
-    public InsumoPrendas toEntity(DtoInsumoPrendas dc) {
-        return modelMapper.map(dc, InsumoPrendas.class);
+    public InsumoProveedor toEntity(DtoInsumoProveedor dc) {
+        return modelMapper.map(dc, InsumoProveedor.class);
     }
 }
