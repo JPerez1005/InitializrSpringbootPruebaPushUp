@@ -1,14 +1,17 @@
 package com.prueba.demo.service.Impl;
 
-import com.prueba.demo.dto.DtoCliente;
-import com.prueba.demo.mapper.MapperCliente;
-import com.prueba.demo.repositories.RepositoryCliente;
-import com.prueba.demo.service.ServiceCliente;
+import com.prueba.demo.dto.DtoEmpresa;
+import com.prueba.demo.dto.DtoMunicipio;
+import com.prueba.demo.mapper.MapperEmpresa;
+import com.prueba.demo.repositories.RepositoryEmpresa;
+import com.prueba.demo.service.ServiceEmpresa;
 import com.prueba.demo.exceptions.Constantes;
 import com.prueba.demo.exceptions.EmptyDataException;
 import com.prueba.demo.exceptions.ExceptionUtil;
 import com.prueba.demo.exceptions.NoAuthorizedException;
-import com.prueba.demo.models.Cliente;
+import com.prueba.demo.models.Empresa;
+import com.prueba.demo.models.Municipio;
+import com.prueba.demo.repositories.RepositoryMunicipio;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -22,43 +25,62 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ServiceImplCliente implements ServiceCliente<DtoCliente>{
+public class ServiceImplEmpresa implements ServiceEmpresa<DtoEmpresa>{
     @Autowired private UniversalServiceImpl usi;
     
-    @Autowired private RepositoryCliente rc;
+    @Autowired private RepositoryEmpresa rd;
     
-    @Autowired private MapperCliente mc;
+    @Autowired private RepositoryMunicipio rp;
+    
+    @Autowired private MapperEmpresa md;
     
     @Override
-    public List<DtoCliente> getAll()
+    public List<DtoEmpresa> getAll()
     throws EmptyDataException, NoAuthorizedException {
-        return usi.getAll(rc, DtoCliente.class);
+        return usi.getAll(rd, DtoEmpresa.class);
     }
 
     @Override
-    public ResponseEntity<Optional<DtoCliente>> getById(Long id) {
-        if(usi.findById(rc, DtoCliente.class, id).isEmpty()){
+    public ResponseEntity<Optional<DtoEmpresa>> getById(Long id) {
+        if(usi.findById(rd, DtoEmpresa.class, id).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(usi.findById(rc, DtoCliente.class, id),HttpStatus.OK);
+            return new ResponseEntity<>(usi.findById(rd, DtoEmpresa.class, id),HttpStatus.OK);
         }
     }
 
     @Override
-    public ResponseEntity<String> create(DtoCliente dto,Long idmunicipio,Long idtipoPersona) {
-        return null;
+    public ResponseEntity<String> create(DtoEmpresa dto,Long idMunicipio) {
+        Municipio p=usi.convertidorAEntidades(rp, DtoMunicipio.class, idMunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("Usuario no encontrado"));
+        
+        Empresa d = md.toEntity(dto);
+            d.setMunicipio(p);
+            rd.save(d);
+            return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<String> update(Long id, DtoCliente dto,Long idmunicipio,Long idtipoPersona) {
-        return null;
+    public ResponseEntity<String> update(Long id, DtoEmpresa dto,Long idMunicipio) {
+        Municipio p=usi.convertidorAEntidades(rp, DtoMunicipio.class, idMunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("Usuario no encontrado"));
+        
+        Empresa d = rd.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empresa no encontrado"));
+        
+        d = md.toEntity(dto);
+            d.setMunicipio(p);
+            rd.save(d);
+            return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        Optional<Cliente> optionalCliente=rc.findById(id);
-        if(optionalCliente!=null){
-            rc.deleteById(id);
+        Optional<Empresa> optionalEmpresa=rd.findById(id);
+        if(optionalEmpresa!=null){
+            rd.deleteById(id);
             return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.GONE);
         }else{
             return ExceptionUtil.getResponseEntity(Constantes.INVALID_DATA, HttpStatus.NOT_FOUND);

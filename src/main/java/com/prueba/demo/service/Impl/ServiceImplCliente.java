@@ -1,6 +1,8 @@
 package com.prueba.demo.service.Impl;
 
 import com.prueba.demo.dto.DtoCliente;
+import com.prueba.demo.dto.DtoMunicipio;
+import com.prueba.demo.dto.DtoTipoPersona;
 import com.prueba.demo.mapper.MapperCliente;
 import com.prueba.demo.repositories.RepositoryCliente;
 import com.prueba.demo.service.ServiceCliente;
@@ -9,6 +11,10 @@ import com.prueba.demo.exceptions.EmptyDataException;
 import com.prueba.demo.exceptions.ExceptionUtil;
 import com.prueba.demo.exceptions.NoAuthorizedException;
 import com.prueba.demo.models.Cliente;
+import com.prueba.demo.models.Municipio;
+import com.prueba.demo.models.TipoPersona;
+import com.prueba.demo.repositories.RepositoryMunicipio;
+import com.prueba.demo.repositories.RepositoryTipoPersona;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +32,10 @@ public class ServiceImplCliente implements ServiceCliente<DtoCliente>{
     @Autowired private UniversalServiceImpl usi;
     
     @Autowired private RepositoryCliente rc;
+    
+    @Autowired private RepositoryMunicipio rm;
+    
+    @Autowired private RepositoryTipoPersona rtp;
     
     @Autowired private MapperCliente mc;
     
@@ -46,12 +56,39 @@ public class ServiceImplCliente implements ServiceCliente<DtoCliente>{
 
     @Override
     public ResponseEntity<String> create(DtoCliente dto,Long idmunicipio,Long idtipoPersona) {
-        return null;
+        Municipio m=usi.convertidorAEntidades(rm, DtoMunicipio.class, idmunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("Municipio no encontrado"));
+        
+        TipoPersona tp=usi.convertidorAEntidades(rtp, DtoMunicipio.class, idmunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("TipoPersona no encontrado"));
+        
+        Cliente c = mc.toEntity(dto);
+        c.setMunicipio(m);
+        c.setTipoPersona(tp);
+        rc.save(c);
+        return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<String> update(Long id, DtoCliente dto,Long idmunicipio,Long idtipoPersona) {
-        return null;
+        Municipio m=usi.convertidorAEntidades(rm, DtoMunicipio.class, idmunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("Municipio no encontrado"));
+        
+        TipoPersona tp=usi.convertidorAEntidades(rtp, DtoTipoPersona.class, idmunicipio)
+                .orElseThrow(()->new EntityNotFoundException
+                ("TipoPersona no encontrado"));
+        
+        Cliente c = rc.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+        
+        c = mc.toEntity(dto);
+        c.setMunicipio(m);
+        c.setTipoPersona(tp);
+        rc.save(c);
+        return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }
 
     @Override
