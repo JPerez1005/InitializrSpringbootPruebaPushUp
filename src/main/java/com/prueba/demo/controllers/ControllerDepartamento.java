@@ -28,8 +28,9 @@ public class ControllerDepartamento {
     @Autowired ServiceDepartamento sc;
     
     @PostMapping("/agregar")
-    public ResponseEntity guardarDepartamento(@RequestBody DtoDepartamento dc,@RequestParam Long id){
-        ResponseEntity mensaje=sc.create(dc,id);
+    public ResponseEntity guardarDepartamento(@RequestBody DtoDepartamento dc,
+    @RequestParam Long idPais){
+        ResponseEntity mensaje=sc.create(dc,idPais);
         return mensaje;
     }
     
@@ -49,9 +50,9 @@ public class ControllerDepartamento {
     @PutMapping("/modificar")
     public ResponseEntity modificarDepartamento(
         @RequestBody DtoDepartamento dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2){
-        ResponseEntity mensaje=sc.update(id, dc, id2);
+        ,@RequestParam Long idDepartamento
+        ,@RequestParam Long idPais){
+        ResponseEntity mensaje=sc.update(idDepartamento, dc, idPais);
         return mensaje;
     }
     

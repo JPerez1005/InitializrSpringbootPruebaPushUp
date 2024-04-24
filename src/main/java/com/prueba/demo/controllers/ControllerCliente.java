@@ -30,10 +30,21 @@ public class ControllerCliente {
     @PostMapping("/agregar")
     public ResponseEntity guardarCliente(
         @RequestBody DtoCliente dc,
-        @RequestParam Long id,
-        @RequestParam Long id2
+        @RequestParam Long idMunicipio,
+        @RequestParam Long idtipoPersona
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2);
+        ResponseEntity mensaje=sc.create(dc,idMunicipio,idtipoPersona);
+        return mensaje;
+    }
+
+    @PutMapping("/modificar")
+    public ResponseEntity modificarCliente(
+        @RequestBody DtoCliente dc
+        ,@RequestParam Long idCliente
+        ,@RequestParam Long idMunicipio
+        ,@RequestParam Long idtipoPersona
+        ){
+        ResponseEntity mensaje=sc.update(idCliente, dc, idMunicipio,idtipoPersona);
         return mensaje;
     }
     
@@ -50,16 +61,7 @@ public class ControllerCliente {
         return sc.getById(id);
     }
     
-    @PutMapping("/modificar")
-    public ResponseEntity modificarCliente(
-        @RequestBody DtoCliente dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
-        ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3);
-        return mensaje;
-    }
+    
     
     @DeleteMapping("/eliminar")
     public ResponseEntity eliminarCliente(
