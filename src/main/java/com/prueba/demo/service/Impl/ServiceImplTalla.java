@@ -45,6 +45,11 @@ public class ServiceImplTalla implements ServiceTalla<DtoTalla>{
 
     @Override
     public ResponseEntity<String> create(DtoTalla dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, Talla.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

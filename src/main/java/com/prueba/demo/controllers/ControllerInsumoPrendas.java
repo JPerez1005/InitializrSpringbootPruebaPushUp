@@ -30,10 +30,10 @@ public class ControllerInsumoPrendas {
     @PostMapping("/agregar")
     public ResponseEntity guardarInsumoPrendas(
         @RequestBody DtoInsumoPrendas dc,
-        @RequestParam Long id,
-        @RequestParam Long id2
+        @RequestParam Long idInsumo,
+        @RequestParam Long idPrenda
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2);
+        ResponseEntity mensaje=sc.create(dc,idInsumo,idPrenda);
         return mensaje;
     }
     
@@ -53,11 +53,11 @@ public class ControllerInsumoPrendas {
     @PutMapping("/modificar")
     public ResponseEntity modificarInsumoPrendas(
         @RequestBody DtoInsumoPrendas dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
+        ,@RequestParam Long idInsumoYPrendas
+        ,@RequestParam Long idInsumo
+        ,@RequestParam Long idPrenda
         ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3);
+        ResponseEntity mensaje=sc.update(idInsumoYPrendas, dc, idInsumo,idPrenda);
         return mensaje;
     }
     

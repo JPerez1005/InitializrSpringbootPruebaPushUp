@@ -45,6 +45,11 @@ public class ServiceImplPais implements ServicePais<DtoPais>{
 
     @Override
     public ResponseEntity<String> create(DtoPais dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, Pais.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

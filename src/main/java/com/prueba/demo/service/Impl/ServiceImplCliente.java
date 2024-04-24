@@ -56,6 +56,10 @@ public class ServiceImplCliente implements ServiceCliente<DtoCliente>{
 
     @Override
     public ResponseEntity<String> create(DtoCliente dto,Long idmunicipio,Long idtipoPersona) {
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Municipio m=usi.convertidorAEntidades(rm, DtoMunicipio.class, idmunicipio)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Municipio no encontrado"));

@@ -56,6 +56,11 @@ public class ServiceImplInsumoProveedor implements ServiceInsumoProveedor<DtoIns
 
     @Override
     public ResponseEntity<String> create(DtoInsumoProveedor dto,Long idProveedor,Long idInsumo) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Proveedor m=usi.convertidorAEntidades(rm, DtoProveedor.class, idProveedor)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Proveedor no encontrado"));

@@ -30,12 +30,25 @@ public class ControllerDetalleOrden {
     @PostMapping("/agregar")
     public ResponseEntity guardarDetalleOrden(
         @RequestBody DtoDetalleOrden dc,
-        @RequestParam Long id,
-        @RequestParam Long id2,
-        @RequestParam Long id3,
-        @RequestParam Long id4
+        @RequestParam Long idOrden,
+        @RequestParam Long idPrenda,
+        @RequestParam Long idcolor,
+        @RequestParam Long idEstado
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2,id3,id4);
+        ResponseEntity mensaje=sc.create(dc,idOrden,idPrenda,idcolor,idEstado);
+        return mensaje;
+    }
+
+    @PutMapping("/modificar")
+    public ResponseEntity modificarDetalleOrden(
+        @RequestBody DtoDetalleOrden dc
+        ,@RequestParam Long idDetalleDeOrden
+        ,@RequestParam Long idOrden
+        ,@RequestParam Long idPrenda
+        ,@RequestParam Long idcolor
+        ,@RequestParam Long idEstado
+        ){
+        ResponseEntity mensaje=sc.update(idDetalleDeOrden, dc, idOrden,idPrenda,idcolor,idEstado);
         return mensaje;
     }
     
@@ -52,18 +65,7 @@ public class ControllerDetalleOrden {
         return sc.getById(id);
     }
     
-    @PutMapping("/modificar")
-    public ResponseEntity modificarDetalleOrden(
-        @RequestBody DtoDetalleOrden dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
-        ,@RequestParam Long id4
-        ,@RequestParam Long id5
-        ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3,id4,id5);
-        return mensaje;
-    }
+    
     
     @DeleteMapping("/eliminar")
     public ResponseEntity eliminarDetalleOrden(

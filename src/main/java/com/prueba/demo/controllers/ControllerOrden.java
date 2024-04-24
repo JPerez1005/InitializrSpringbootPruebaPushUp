@@ -30,11 +30,23 @@ public class ControllerOrden {
     @PostMapping("/agregar")
     public ResponseEntity guardarOrden(
         @RequestBody DtoOrden dc,
-        @RequestParam Long id,
-        @RequestParam Long id2,
-        @RequestParam Long id3
+        @RequestParam Long idEmpleado,
+        @RequestParam Long idEstado,
+        @RequestParam Long idCliente
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2,id3);
+        ResponseEntity mensaje=sc.create(dc,idEmpleado,idEstado,idCliente);
+        return mensaje;
+    }
+
+    @PutMapping("/modificar")
+    public ResponseEntity modificarOrden(
+        @RequestBody DtoOrden dc
+        ,@RequestParam Long id
+        ,@RequestParam Long idEmpleado
+        ,@RequestParam Long idEstado
+        ,@RequestParam Long idCliente
+        ){
+        ResponseEntity mensaje=sc.update(id, dc, idEmpleado,idEstado,idCliente);
         return mensaje;
     }
     
@@ -51,17 +63,7 @@ public class ControllerOrden {
         return sc.getById(id);
     }
     
-    @PutMapping("/modificar")
-    public ResponseEntity modificarOrden(
-        @RequestBody DtoOrden dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
-        ,@RequestParam Long id4
-        ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3,id4);
-        return mensaje;
-    }
+    
     
     @DeleteMapping("/eliminar")
     public ResponseEntity eliminarOrden(

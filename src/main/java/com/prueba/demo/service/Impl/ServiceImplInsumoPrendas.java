@@ -56,6 +56,11 @@ public class ServiceImplInsumoPrendas implements ServiceInsumoPrendas<DtoInsumoP
 
     @Override
     public ResponseEntity<String> create(DtoInsumoPrendas dto,Long idInsumo,Long idPrenda) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Insumo m=usi.convertidorAEntidades(rm, DtoInsumo.class, idInsumo)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Insumo no encontrado"));

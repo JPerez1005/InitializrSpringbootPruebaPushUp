@@ -51,6 +51,11 @@ public class ServiceImplEmpresa implements ServiceEmpresa<DtoEmpresa>{
 
     @Override
     public ResponseEntity<String> create(DtoEmpresa dto,Long idMunicipio) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Municipio p=usi.convertidorAEntidades(rp, DtoMunicipio.class, idMunicipio)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Usuario no encontrado"));

@@ -56,6 +56,11 @@ public class ServiceImplInventario implements ServiceInventario<DtoInventario>{
 
     @Override
     public ResponseEntity<String> create(DtoInventario dto,Long idPrenda,Long idTalla) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Prenda m=usi.convertidorAEntidades(rm, DtoPrenda.class, idPrenda)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Prenda no encontrado"));

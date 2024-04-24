@@ -30,11 +30,23 @@ public class ControllerPrenda {
     @PostMapping("/agregar")
     public ResponseEntity guardarPrenda(
         @RequestBody DtoPrenda dc,
-        @RequestParam Long id,
-        @RequestParam Long id2,
-        @RequestParam Long id3
+        @RequestParam Long idTipoProteccion,
+        @RequestParam Long idEstado,
+        @RequestParam Long idGenero
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2,id3);
+        ResponseEntity mensaje=sc.create(dc,idTipoProteccion,idEstado,idGenero);
+        return mensaje;
+    }
+
+    @PutMapping("/modificar")
+    public ResponseEntity modificarPrenda(
+        @RequestBody DtoPrenda dc
+        ,@RequestParam Long id
+        ,@RequestParam Long idTipoProteccion
+        ,@RequestParam Long idEstado
+        ,@RequestParam Long idGenero
+        ){
+        ResponseEntity mensaje=sc.update(id, dc, idTipoProteccion,idEstado,idGenero);
         return mensaje;
     }
     
@@ -51,17 +63,7 @@ public class ControllerPrenda {
         return sc.getById(id);
     }
     
-    @PutMapping("/modificar")
-    public ResponseEntity modificarPrenda(
-        @RequestBody DtoPrenda dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
-        ,@RequestParam Long id4
-        ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3,id4);
-        return mensaje;
-    }
+    
     
     @DeleteMapping("/eliminar")
     public ResponseEntity eliminarPrenda(

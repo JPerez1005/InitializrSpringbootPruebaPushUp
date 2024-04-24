@@ -45,6 +45,11 @@ public class ServiceImplGenero implements ServiceGenero<DtoGenero>{
 
     @Override
     public ResponseEntity<String> create(DtoGenero dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, Genero.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

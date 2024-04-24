@@ -72,6 +72,11 @@ public class ServiceImplDetalleOrden implements ServiceDetalleOrden<DtoDetalleOr
         Long idPrenda,
         Long idColor,
         Long idEstado) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Orden m=usi.convertidorAEntidades(rv, DtoOrden.class, idOrden)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Orden no encontrado"));

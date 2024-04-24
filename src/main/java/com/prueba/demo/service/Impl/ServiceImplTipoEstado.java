@@ -45,6 +45,11 @@ public class ServiceImplTipoEstado implements ServiceTipoEstado<DtoTipoEstado>{
 
     @Override
     public ResponseEntity<String> create(DtoTipoEstado dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, TipoEstado.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

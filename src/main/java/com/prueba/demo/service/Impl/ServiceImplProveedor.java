@@ -56,6 +56,11 @@ public class ServiceImplProveedor implements ServiceProveedor<DtoProveedor>{
 
     @Override
     public ResponseEntity<String> create(DtoProveedor dto,Long idTipoPersona,Long idMunicipio) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         TipoPersona m=usi.convertidorAEntidades(rm, DtoTipoPersona.class, idTipoPersona)
                 .orElseThrow(()->new EntityNotFoundException
                 ("TipoPersona no encontrado"));

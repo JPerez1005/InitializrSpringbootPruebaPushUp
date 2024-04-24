@@ -30,10 +30,10 @@ public class ControllerInventario {
     @PostMapping("/agregar")
     public ResponseEntity guardarInventario(
         @RequestBody DtoInventario dc,
-        @RequestParam Long id,
-        @RequestParam Long id2
+        @RequestParam Long idPrenda,
+        @RequestParam Long idTalla
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2);
+        ResponseEntity mensaje=sc.create(dc,idPrenda,idTalla);
         return mensaje;
     }
     
@@ -53,11 +53,11 @@ public class ControllerInventario {
     @PutMapping("/modificar")
     public ResponseEntity modificarInventario(
         @RequestBody DtoInventario dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
+        ,@RequestParam Long idInventario
+        ,@RequestParam Long idPrenda
+        ,@RequestParam Long idTalla
         ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3);
+        ResponseEntity mensaje=sc.update(idInventario, dc, idPrenda,idTalla);
         return mensaje;
     }
     

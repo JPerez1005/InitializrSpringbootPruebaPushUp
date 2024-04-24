@@ -45,6 +45,9 @@ public class ServiceImplColor implements ServiceColor<DtoColor>{
 
     @Override
     public ResponseEntity<String> create(DtoColor dto) {
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         usi.save(rc, dto, Color.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

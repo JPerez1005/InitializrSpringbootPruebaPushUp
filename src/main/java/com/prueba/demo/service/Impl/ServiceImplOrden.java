@@ -66,6 +66,11 @@ public class ServiceImplOrden implements ServiceOrden<DtoOrden>{
         Long idEmpleado,
         Long idEstado,
         Long idCliente) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Empleado m=usi.convertidorAEntidades(rv, DtoEmpleado.class, idEmpleado)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Empleado no encontrada"));

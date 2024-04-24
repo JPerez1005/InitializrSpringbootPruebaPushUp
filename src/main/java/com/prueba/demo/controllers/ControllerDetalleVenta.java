@@ -30,11 +30,11 @@ public class ControllerDetalleVenta {
     @PostMapping("/agregar")
     public ResponseEntity guardarDetalleVenta(
         @RequestBody DtoDetalleVenta dc,
-        @RequestParam Long id,
-        @RequestParam Long id2,
-        @RequestParam Long id3
+        @RequestParam Long idVenta,
+        @RequestParam Long idInventario,
+        @RequestParam Long idTalla
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2,id3);
+        ResponseEntity mensaje=sc.create(dc,idVenta,idInventario,idTalla);
         return mensaje;
     }
     
@@ -54,12 +54,12 @@ public class ControllerDetalleVenta {
     @PutMapping("/modificar")
     public ResponseEntity modificarDetalleVenta(
         @RequestBody DtoDetalleVenta dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
-        ,@RequestParam Long id4
+        ,@RequestParam Long idDetalleDeVenta
+        ,@RequestParam Long idVenta
+        ,@RequestParam Long idInventario
+        ,@RequestParam Long idTalla
         ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3,id4);
+        ResponseEntity mensaje=sc.update(idDetalleDeVenta, dc, idVenta,idInventario,idTalla);
         return mensaje;
     }
     

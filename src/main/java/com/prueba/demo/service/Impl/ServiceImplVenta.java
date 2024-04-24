@@ -66,6 +66,11 @@ public class ServiceImplVenta implements ServiceVenta<DtoVenta>{
         Long idFormaPago,
         Long idEmpleado,
         Long idCliente) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         FormaPago m=usi.convertidorAEntidades(rv, DtoFormaPago.class, idFormaPago)
                 .orElseThrow(()->new EntityNotFoundException
                 ("FormaPago no encontrada"));

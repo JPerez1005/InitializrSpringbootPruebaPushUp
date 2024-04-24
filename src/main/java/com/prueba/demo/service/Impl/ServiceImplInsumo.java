@@ -45,6 +45,11 @@ public class ServiceImplInsumo implements ServiceInsumo<DtoInsumo>{
 
     @Override
     public ResponseEntity<String> create(DtoInsumo dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, Insumo.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

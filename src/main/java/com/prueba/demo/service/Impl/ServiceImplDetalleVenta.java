@@ -66,6 +66,11 @@ public class ServiceImplDetalleVenta implements ServiceDetalleVenta<DtoDetalleVe
         Long idVenta,
         Long idInventario,
         Long idTalla) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Venta m=usi.convertidorAEntidades(rv, DtoVenta.class, idVenta)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Venta no encontrada"));

@@ -66,6 +66,11 @@ public class ServiceImplPrenda implements ServicePrenda<DtoPrenda>{
         Long idEstado,
         Long idTipoProteccion,
         Long idGenero) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         Estado m=usi.convertidorAEntidades(rv, DtoEstado.class, idEstado)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Estado no encontrada"));

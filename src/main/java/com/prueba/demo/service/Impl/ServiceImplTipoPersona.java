@@ -45,6 +45,11 @@ public class ServiceImplTipoPersona implements ServiceTipoPersona<DtoTipoPersona
 
     @Override
     public ResponseEntity<String> create(DtoTipoPersona dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, TipoPersona.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

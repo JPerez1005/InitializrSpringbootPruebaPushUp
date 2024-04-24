@@ -45,6 +45,11 @@ public class ServiceImplTipoProteccion implements ServiceTipoProteccion<DtoTipoP
 
     @Override
     public ResponseEntity<String> create(DtoTipoProteccion dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, TipoProteccion.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

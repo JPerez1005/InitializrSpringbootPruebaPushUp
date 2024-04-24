@@ -30,10 +30,10 @@ public class ControllerEmpleado {
     @PostMapping("/agregar")
     public ResponseEntity guardarEmpleado(
         @RequestBody DtoEmpleado dc,
-        @RequestParam Long id,
-        @RequestParam Long id2
+        @RequestParam Long idMunicipio,
+        @RequestParam Long idCargos
         ){
-        ResponseEntity mensaje=sc.create(dc,id,id2);
+        ResponseEntity mensaje=sc.create(dc,idMunicipio,idCargos);
         return mensaje;
     }
     
@@ -54,10 +54,10 @@ public class ControllerEmpleado {
     public ResponseEntity modificarEmpleado(
         @RequestBody DtoEmpleado dc
         ,@RequestParam Long id
-        ,@RequestParam Long id2
-        ,@RequestParam Long id3
+        ,@RequestParam Long idMunicipios
+        ,@RequestParam Long idCargos
         ){
-        ResponseEntity mensaje=sc.update(id, dc, id2,id3);
+        ResponseEntity mensaje=sc.update(id, dc, idMunicipios,idCargos);
         return mensaje;
     }
     

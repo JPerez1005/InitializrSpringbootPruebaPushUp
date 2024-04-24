@@ -51,6 +51,9 @@ public class ServiceImplDepartamento implements ServiceDepartamento<DtoDepartame
 
     @Override
     public ResponseEntity<String> create(DtoDepartamento dto,Long idpais) {
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         Pais p=usi.convertidorAEntidades(rp, DtoPais.class, idpais)
                 .orElseThrow(()->new EntityNotFoundException
                 ("Usuario no encontrado"));

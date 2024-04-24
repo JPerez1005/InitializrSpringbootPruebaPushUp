@@ -45,6 +45,9 @@ public class ServiceImplCargos implements ServiceCargos<DtoCargos>{
 
     @Override
     public ResponseEntity<String> create(DtoCargos dto) {
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         usi.save(rc, dto, Cargos.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }

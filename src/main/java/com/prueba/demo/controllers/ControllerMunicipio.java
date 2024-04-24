@@ -28,8 +28,8 @@ public class ControllerMunicipio {
     @Autowired ServiceMunicipio sc;
     
     @PostMapping("/agregar")
-    public ResponseEntity guardarMunicipio(@RequestBody DtoMunicipio dc,@RequestParam Long id){
-        ResponseEntity mensaje=sc.create(dc,id);
+    public ResponseEntity guardarMunicipio(@RequestBody DtoMunicipio dc,@RequestParam Long idDepartamento){
+        ResponseEntity mensaje=sc.create(dc,idDepartamento);
         return mensaje;
     }
     
@@ -49,9 +49,9 @@ public class ControllerMunicipio {
     @PutMapping("/modificar")
     public ResponseEntity modificarMunicipio(
         @RequestBody DtoMunicipio dc
-        ,@RequestParam Long id
-        ,@RequestParam Long id2){
-        ResponseEntity mensaje=sc.update(id, dc, id2);
+        ,@RequestParam Long idMunicipio
+        ,@RequestParam Long idDepartamento){
+        ResponseEntity mensaje=sc.update(idMunicipio, dc, idDepartamento);
         return mensaje;
     }
     

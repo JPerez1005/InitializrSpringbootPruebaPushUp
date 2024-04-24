@@ -45,6 +45,11 @@ public class ServiceImplFormaPago implements ServiceFormaPago<DtoFormaPago>{
 
     @Override
     public ResponseEntity<String> create(DtoFormaPago dto) {
+        
+        if(dto==null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        
         usi.save(rc, dto, FormaPago.class);
         return ExceptionUtil.getResponseEntity(Constantes.OK, HttpStatus.CREATED);
     }
