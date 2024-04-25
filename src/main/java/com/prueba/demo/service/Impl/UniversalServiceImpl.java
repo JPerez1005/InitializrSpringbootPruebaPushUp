@@ -11,7 +11,8 @@ import org.springframework.http.HttpStatus;
 
 @Service
 public class UniversalServiceImpl {
-     private final ModelMapper modelMapper;
+    
+    private final ModelMapper modelMapper;
 
     public UniversalServiceImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -33,8 +34,6 @@ public class UniversalServiceImpl {
                 .collect(Collectors.toList());
         }
     }
-    
-
     
     public <Entity, Dto, ID> Optional<Dto> findById(JpaRepository<Entity, ID> repository, Class<Dto> dtoClass, ID id) {
         Optional<Entity> optionalEntity = repository.findById(id);

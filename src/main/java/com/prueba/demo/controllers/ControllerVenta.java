@@ -4,7 +4,10 @@ import com.prueba.demo.dto.DtoVenta;
 import com.prueba.demo.exceptions.EmptyDataException;
 import com.prueba.demo.exceptions.NoAuthorizedException;
 import com.prueba.demo.service.ServiceVenta;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,8 @@ public class ControllerVenta {
     
     @Autowired ServiceVenta sc;
     
+    @Autowired UniversalControllerImplementation uci;
+    
     @PostMapping("/agregar")
     public ResponseEntity guardarVenta(
         @RequestBody DtoVenta dc,
@@ -41,9 +46,23 @@ public class ControllerVenta {
     @GetMapping("/listar")
     public ResponseEntity<List<DtoVenta>> listarVenta() 
             throws EmptyDataException,NoAuthorizedException{
-        List<DtoVenta> c=(List<DtoVenta>) sc.getAll();
-        return new ResponseEntity<>(c,HttpStatus.OK);
+        return uci.listar(sc);
     }
+    
+    @GetMapping("/listar_por_anio_y_mes")
+    public ResponseEntity<List<DtoVenta>> listarVentasDeJulio(
+            @RequestParam int anio,
+            @RequestParam String mes
+    ) 
+            throws EmptyDataException, NoAuthorizedException {
+        // Llama a listarFechas con los argumentos correctos
+        ResponseEntity<List<DtoVenta>> responseEntity =
+                uci.listarFechas(sc, DtoVenta.class, DtoVenta::getFecha,anio,mes);
+
+        // Devuelve la respuesta obtenida de listarFechas
+        return responseEntity;
+    }
+
     
     @GetMapping("/buscar")
     public ResponseEntity<DtoVenta> buscarVenta(@PathVariable Long id) 
