@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author perez
- */
+*/
 
 @RestController
 public class UniversalControllerImplementation {
@@ -36,7 +36,7 @@ public class UniversalControllerImplementation {
         }
     }
     
-/* 
+    /* 
          ____                      _ _            
         / ___|___  _ __  ___ _   _| | |_ __ _ ___ 
        | |   / _ \| '_ \/ __| | | | | __/ _` / __|
@@ -48,8 +48,7 @@ public class UniversalControllerImplementation {
      ///_.-' _..--.'_    \                    `( ) ) // //
      / (_..-' // (< _     ;_..__               ; `' / ///
       / // // //  `-._,_)' // / ``--...____..-' /// / //
-    
-*/
+    */
     
     //Consulta para listar fechas
     public <T> ResponseEntity<List<T>> listarFechas
@@ -65,7 +64,6 @@ public class UniversalControllerImplementation {
         // Obtiene la lista de la respuesta
         List<T> c = responseEntity.getBody();
 
-        // Filtra la lista para obtener solo los elementos que cumplen la condición
         List<T> listFechas = c.stream()
             .filter(elemento -> {
                 // Usa el extractor de fecha para obtener la fecha del elemento
@@ -76,11 +74,9 @@ public class UniversalControllerImplementation {
                 } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException("El mes proporcionado es inválido. Use un nombre de mes válido en inglés (por ejemplo, 'JANUARY').");
                 }
-                // Compara el mes y año de la fecha de venta
                 return fechaVenta.getMonth() == mesEnum && fechaVenta.getYear() == anio;
             })
             .collect(Collectors.toList());
-
         // Devuelve la lista filtrada
         return new ResponseEntity<>(listFechas, HttpStatus.OK);
     }
